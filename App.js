@@ -1,6 +1,23 @@
 import { Button, StyleSheet, Text, TextInput, View } from "react-native";
+import { useState } from "react";
 
 export default function App() {
+  const [enteredGoalText, setEnteredGoalText] = useState("");
+  const [courseGoals, setCourseGoals] = useState([]);
+
+  const goalInputHandler = (enteredText) => {
+    setEnteredGoalText(enteredText);
+  };
+
+  const addGoalHandler = () => {
+    // setCourseGoals([...courseGoals, enteredGoalText]);
+    // or (recommended when the new data uses the previews data)
+    setCourseGoals((currentCourseGoals) => [
+      ...currentCourseGoals,
+      enteredGoalText,
+    ]);
+  };
+
   return (
     <View style={styles.appContainer}>
       <View
@@ -21,8 +38,9 @@ export default function App() {
             minHeight: 38,
             margin: 4,
           }}
+          onTextInput={goalInputHandler}
         ></TextInput>
-        <Button title={"Add goal"}></Button>
+        <Button title={"Add goal"} onPress={addGoalHandler}></Button>
       </View>
       <View style={{ flex: 10 }}>
         <Text>List of goals</Text>
