@@ -22,7 +22,7 @@ export default function App() {
     // or (recommended when the new data uses the previews data)
     setCourseGoals((currentCourseGoals) => [
       ...currentCourseGoals,
-      enteredGoalText,
+      { key: Math.random().toString(), text: enteredGoalText },
     ]);
   }
 
@@ -37,15 +37,17 @@ export default function App() {
         <Button title={"Add goal"} onPress={addGoalHandler}></Button>
       </View>
       <View style={{ flex: 10, gap: 8 }}>
-        <ScrollView>
-          <View style={{ flex: 1, gap: 8 }}>
-            {courseGoals.map((goal) => (
-              <View key={goal} style={styles.goalItem}>
-                <Text style={{ color: "white" }}>{goal}</Text>
+        <FlatList
+          data={courseGoals}
+          contentContainerStyle={{ flex: 1, gap: 8 }}
+          renderItem={(itemData) => {
+            return (
+              <View style={styles.goalItem}>
+                <Text style={{ color: "white" }}>{itemData.item.text}</Text>
               </View>
-            ))}
-          </View>
-        </ScrollView>
+            );
+          }}
+        ></FlatList>
       </View>
     </View>
   );
