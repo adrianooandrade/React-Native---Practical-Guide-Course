@@ -1,9 +1,13 @@
-import { StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 
 function GoalItem(props) {
   return (
-    <View style={styles.goalItem}>
-      <Text style={{ color: "white" }}>{props.text}</Text>
+    <View>
+      <Pressable onPress={props.onPressItem.bind(this, props.id)}>
+        <View style={styles.goalItem}>
+          <Text style={{ color: "white" }}>{props.text}</Text>
+        </View>
+      </Pressable>
     </View>
   );
 }

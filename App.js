@@ -15,6 +15,12 @@ export default function App() {
     ]);
   }
 
+  const deleteItemHandler = (id) => {
+    setCourseGoals((currentCourseGoals) => {
+      return currentCourseGoals.filter((goal) => goal.key !== id);
+    });
+  };
+
   return (
     <View style={styles.appContainer}>
       <View style={styles.actions}>
@@ -25,7 +31,13 @@ export default function App() {
           data={courseGoals}
           contentContainerStyle={{ gap: 8 }}
           renderItem={(goalItem) => {
-            return <GoalItem text={goalItem.item.text}></GoalItem>;
+            return (
+              <GoalItem
+                text={goalItem.item.text}
+                id={goalItem.item.key}
+                onPressItem={deleteItemHandler}
+              ></GoalItem>
+            );
           }}
         ></FlatList>
       </View>
