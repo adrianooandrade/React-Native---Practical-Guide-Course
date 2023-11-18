@@ -1,23 +1,12 @@
-import {
-  Button,
-  FlatList,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-} from "react-native";
+import { FlatList, StyleSheet, View } from "react-native";
 import { useState } from "react";
+import GoalItem from "./components/GoalItem/GoalItem";
+import GoalInput from "./components/GoalInput/GoalInput";
 
 export default function App() {
-  const [enteredGoalText, setEnteredGoalText] = useState("");
   const [courseGoals, setCourseGoals] = useState([]);
 
-  const goalInputHandler = (enteredText) => {
-    setEnteredGoalText(enteredText);
-  };
-
-  function addGoalHandler() {
+  function addGoalHandler(enteredGoalText) {
     // setCourseGoals([...courseGoals, enteredGoalText]);
     // or (recommended when the new data uses the previews data)
     setCourseGoals((currentCourseGoals) => [
@@ -29,23 +18,14 @@ export default function App() {
   return (
     <View style={styles.appContainer}>
       <View style={styles.actions}>
-        <TextInput
-          placeholder={"What are your goals in life?"}
-          style={styles.textInput}
-          onChangeText={goalInputHandler}
-        ></TextInput>
-        <Button title={"Add goal"} onPress={addGoalHandler}></Button>
+        <GoalInput onAddGoal={addGoalHandler}></GoalInput>
       </View>
-      <View style={{ flex: 10, gap: 8 }}>
+      <View style={styles.items}>
         <FlatList
           data={courseGoals}
-          contentContainerStyle={{ flex: 1, gap: 8 }}
-          renderItem={(itemData) => {
-            return (
-              <View style={styles.goalItem}>
-                <Text style={{ color: "white" }}>{itemData.item.text}</Text>
-              </View>
-            );
+          contentContainerStyle={{ gap: 8 }}
+          renderItem={(goalItem) => {
+            return <GoalItem text={goalItem.item.text}></GoalItem>;
           }}
         ></FlatList>
       </View>
@@ -61,21 +41,6 @@ const styles = StyleSheet.create({
   },
   actions: {
     flex: 1,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    gap: 8,
-    alignItems: "center",
   },
-  textInput: {
-    flex: 1,
-    borderWidth: 2,
-    borderColor: "#cccccc",
-    minHeight: 38,
-    margin: 4,
-  },
-  goalItem: {
-    borderRadius: 6,
-    backgroundColor: "#2296f3",
-    alignItems: "center",
-  },
+  items: { flex: 10, gap: 8 },
 });
