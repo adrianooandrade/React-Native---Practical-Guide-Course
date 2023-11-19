@@ -2,7 +2,7 @@ import { Pressable, StyleSheet, Text, View } from "react-native";
 
 function GoalItem(props) {
   return (
-    <View style={{ borderRadius: 6, backgroundColor: "#2296f3" }}>
+    <View style={{ borderRadius: 4, backgroundColor: "#4281A4" }}>
       <Pressable
         android_ripple={{ color: "0064F3" }}
         style={(pressedData) => {

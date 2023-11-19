@@ -2,6 +2,7 @@ import { Button, FlatList, StyleSheet, View } from "react-native";
 import { useState } from "react";
 import GoalItem from "./components/GoalItem/GoalItem";
 import GoalInput from "./components/GoalInput/GoalInput";
+import { StatusBar } from "expo-status-bar";
 
 export default function App() {
   const [courseGoals, setCourseGoals] = useState([]);
@@ -33,31 +34,38 @@ export default function App() {
   };
 
   return (
-    <View style={styles.appContainer}>
-      <Button title={"Add new goal"} onPress={startAddGoalHandler}></Button>
-      <View style={styles.actions}>
-        <GoalInput
-          openModalVisible={modalIsVisible}
-          closeModalVisible={endAddGoalHandler}
-          onAddGoal={addGoalHandler}
-        ></GoalInput>
+    <>
+      <StatusBar style={"auto"}></StatusBar>
+      <View style={styles.appContainer}>
+        <Button
+          title={"Add new goal"}
+          onPress={startAddGoalHandler}
+          color={"#4281A4"}
+        ></Button>
+        <View style={styles.actions}>
+          <GoalInput
+            openModalVisible={modalIsVisible}
+            closeModalVisible={endAddGoalHandler}
+            onAddGoal={addGoalHandler}
+          ></GoalInput>
+        </View>
+        <View style={styles.items}>
+          <FlatList
+            data={courseGoals}
+            contentContainerStyle={{ gap: 8 }}
+            renderItem={(goalItem) => {
+              return (
+                <GoalItem
+                  text={goalItem.item.text}
+                  id={goalItem.item.key}
+                  onPressItem={deleteItemHandler}
+                ></GoalItem>
+              );
+            }}
+          ></FlatList>
+        </View>
       </View>
-      <View style={styles.items}>
-        <FlatList
-          data={courseGoals}
-          contentContainerStyle={{ gap: 8 }}
-          renderItem={(goalItem) => {
-            return (
-              <GoalItem
-                text={goalItem.item.text}
-                id={goalItem.item.key}
-                onPressItem={deleteItemHandler}
-              ></GoalItem>
-            );
-          }}
-        ></FlatList>
-      </View>
-    </View>
+    </>
   );
 }
 

@@ -14,16 +14,35 @@ function GoalInput(props) {
   }
 
   return (
-    <Modal visible={props.openModalVisible} animationType={"slide"}>
+    <Modal
+      visible={props.openModalVisible}
+      transparent={true}
+      animationType={"slide"}
+      style={styles.modal}
+    >
       <View style={styles.actions}>
         <TextInput
           placeholder={"What are your goals in life?"}
           style={styles.textInput}
+          placeholderTextColor="#ffffff"
           onChangeText={goalInputHandler}
           value={enteredGoalText}
         ></TextInput>
-        <Button title={"Add goal"} onPress={addGoalHandler}></Button>
-        <Button title={"Cancel"} onPress={props.closeModalVisible}></Button>
+
+        <View
+          style={{ flexDirection: "row", gap: 8, justifyContent: "center" }}
+        >
+          <Button
+            title={"Add goal"}
+            onPress={addGoalHandler}
+            color={"#4281A4"}
+          ></Button>
+          <Button
+            title={"Cancel"}
+            onPress={props.closeModalVisible}
+            color={"#5E9DBF"}
+          ></Button>
+        </View>
       </View>
     </Modal>
   );
@@ -34,16 +53,17 @@ export default GoalInput;
 const styles = StyleSheet.create({
   actions: {
     flex: 1,
-    flexDirection: "row",
-    justifyContent: "space-between",
+    flexDirection: "column",
     gap: 8,
-    alignItems: "center",
+    alignItems: "stretch",
+    justifyContent: "center",
+    backgroundColor: "#F8F7EE",
+    padding: 20,
   },
   textInput: {
-    flex: 1,
-    borderWidth: 2,
-    borderColor: "#cccccc",
+    borderRadius: 6,
+    color: "#ffffff",
+    backgroundColor: "#4281A4",
     minHeight: 38,
-    margin: 4,
   },
 });
