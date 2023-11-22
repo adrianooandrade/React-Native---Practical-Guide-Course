@@ -3,12 +3,20 @@ import { ImageBackground, SafeAreaView, StyleSheet, View } from "react-native";
 import { useState } from "react";
 import StartGameScreen from "./Screens/StartGameScreen";
 import GameScreen from "./Screens/GameScreen";
+import GameOverScreen from "./Screens/GameOverScreen";
 
 export default function App() {
   const [userNumber, setUserNumber] = useState(null);
 
+  const [gameIsOver, setGameIsOver] = useState(false);
+
   function pickedNumberHandler(pickedNumber) {
     setUserNumber(pickedNumber);
+  }
+
+  function guessedNumberHandler() {
+    console.log("OK");
+    setGameIsOver(true);
   }
 
   let screen = (
@@ -16,8 +24,18 @@ export default function App() {
   );
 
   if (userNumber) {
-    screen = <GameScreen userNumber={userNumber}></GameScreen>;
+    screen = (
+      <GameScreen
+        userNumber={userNumber}
+        onGuessedNumber={guessedNumberHandler}
+      ></GameScreen>
+    );
   }
+
+  if (gameIsOver && userNumber) {
+    screen = <GameOverScreen></GameOverScreen>;
+  }
+
   return (
     <>
       <StatusBar style="auto" />

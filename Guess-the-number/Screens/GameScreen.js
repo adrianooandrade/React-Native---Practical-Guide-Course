@@ -1,13 +1,23 @@
-import { StyleSheet, Text, View } from "react-native";
+import { Alert, StyleSheet, Text, View } from "react-native";
 import Title from "../components/Title";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Colors } from "../constants/colors";
 import CustomButton from "../components/CustomButton";
 
-function GameScreen({ userNumber }) {
+let currentMin = 1;
+let currentMax = 100;
+
+function GameScreen({ userNumber, onGuessedNumber }) {
   const [currentGuess, setCurrentGuess] = useState(
-    generateRandomBetween(0, 100, userNumber),
+    generateRandomBetween(1, 100, userNumber),
   );
+
+  useEffect(() => {
+    if (currentGuess === userNumber) {
+      onGuessedNumber();
+    }
+  }, [currentGuess, userNumber, onGuessedNumber]);
+
   function generateRandomBetween(min, max, exclude) {
     const randomNum = Math.floor(Math.random() * (max - min) + min);
 
@@ -18,15 +28,40 @@ function GameScreen({ userNumber }) {
     return randomNum;
   }
 
+  function guessNextHandler(direction) {
+    if (
+      (direction === "lower" && currentGuess < userNumber) ||
+      (direction === "higher" && currentGuess > userNumber)
+    ) {
+      Alert.alert("Why are you lying?", "Spill it out", [
+        { text: "Ok", style: "cancel" },
+      ]);
+      return;
+    }
+
+    if (direction === "lower") {
+      currentMax = currentGuess;
+    } else {
+      currentMin = currentGuess + 1;
+    }
+
+    const newNum = generateRandomBetween(currentMin, currentMax, currentGuess);
+    setCurrentGuess(newNum);
+  }
+
   return (
     <View style={styles.gameScreen}>
       <Title label={"Computed Guess"}></Title>
       <Text style={styles.text}>{currentGuess.toString()}</Text>
       <View style={styles.actionContainer}>
         <Text>{"Height or Lower?"}</Text>
-        <View style={{ gap: 8 }}>
-          <CustomButton>+</CustomButton>
-          <CustomButton>-</CustomButton>
+        <View style={{ gap: 8, flexDirection: "row" }}>
+          <CustomButton onPressButton={guessNextHandler.bind(null, "lower")}>
+            -
+          </CustomButton>
+          <CustomButton onPressButton={guessNextHandler.bind(null, "higher")}>
+            +
+          </CustomButton>
         </View>
       </View>
       <View style={styles.logContainer}>
