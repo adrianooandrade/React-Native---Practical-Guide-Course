@@ -1,5 +1,5 @@
 import { Pressable, StyleSheet, Text, View } from "react-native";
-
+import { Colors } from "../constants/colors";
 // Pressable is recommended as a substitute for Touchable
 // Style pressed arrow function was added for IOs as android_ripple "replacement" with opacity as instead of a ripple
 function CustomButton({ children, onPressButton }) {
@@ -11,7 +11,7 @@ function CustomButton({ children, onPressButton }) {
             ? [styles.buttonInnerContainer, styles.pressed]
             : styles.buttonInnerContainer
         }
-        android_ripple={{ color: "#fcd941" }}
+        android_ripple={{ color: Colors.primary600 }}
         onPress={onPressButton}
       >
         <Text style={styles.buttonText}>{children}</Text>
@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
     overflow: "hidden",
   },
   buttonInnerContainer: {
-    backgroundColor: "#fdf550",
+    backgroundColor: Colors.primary500,
     paddingVertical: 8,
     paddingHorizontal: 16,
   },
