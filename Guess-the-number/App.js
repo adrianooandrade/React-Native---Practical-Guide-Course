@@ -4,6 +4,7 @@ import { useState } from "react";
 import StartGameScreen from "./Screens/StartGameScreen";
 import GameScreen from "./Screens/GameScreen";
 import GameOverScreen from "./Screens/GameOverScreen";
+import Title from "./components/Title";
 
 export default function App() {
   const [userNumber, setUserNumber] = useState(null);
@@ -15,7 +16,6 @@ export default function App() {
   }
 
   function guessedNumberHandler() {
-    console.log("OK");
     setGameIsOver(true);
   }
 
@@ -46,7 +46,20 @@ export default function App() {
           style={styles.imageContainer}
           imageStyle={styles.backgroundImage}
         >
-          <SafeAreaView style={styles.overlayContainer}>{screen}</SafeAreaView>
+          <SafeAreaView style={{ flex: 1, justifyContent: "space-between" }}>
+            <View
+              style={{
+                backgroundColor: "rgba(255,255,255,0.8)",
+                margin: 28,
+                borderRadius: 8,
+                marginTop: 50,
+              }}
+            >
+              <Title label={"Guess the number"}></Title>
+            </View>
+
+            <View style={styles.overlayContainer}>{screen}</View>
+          </SafeAreaView>
         </ImageBackground>
       </View>
     </>

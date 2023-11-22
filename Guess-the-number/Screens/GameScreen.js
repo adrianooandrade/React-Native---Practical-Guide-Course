@@ -52,20 +52,24 @@ function GameScreen({ userNumber, onGuessedNumber }) {
   return (
     <View style={styles.gameScreen}>
       <Title label={"Computed Guess"}></Title>
-      <Text style={styles.text}>{currentGuess.toString()}</Text>
+      <Text style={styles.textGuess}>{currentGuess.toString()}</Text>
       <View style={styles.actionContainer}>
-        <Text>{"Height or Lower?"}</Text>
+        <Text style={styles.text}>{"Height or Lower?"}</Text>
         <View style={{ gap: 8, flexDirection: "row" }}>
-          <CustomButton onPressButton={guessNextHandler.bind(null, "lower")}>
-            -
-          </CustomButton>
-          <CustomButton onPressButton={guessNextHandler.bind(null, "higher")}>
-            +
-          </CustomButton>
+          <View style={{ flex: 1 }}>
+            <CustomButton onPressButton={guessNextHandler.bind(null, "lower")}>
+              -
+            </CustomButton>
+          </View>
+          <View style={{ flex: 1 }}>
+            <CustomButton onPressButton={guessNextHandler.bind(null, "higher")}>
+              +
+            </CustomButton>
+          </View>
         </View>
       </View>
       <View style={styles.logContainer}>
-        <Text>{"Log"}</Text>
+        <Text style={styles.text}>{"Log"}</Text>
       </View>
     </View>
   );
@@ -85,13 +89,20 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.25,
   },
-  text: {
+  textGuess: {
     borderWidth: 4,
     borderRadius: 8,
     borderColor: Colors.primary600,
     padding: 24,
+    fontSize: 28,
     textAlign: "center",
   },
-  actionContainer: {},
+  text: {
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+  actionContainer: {
+    gap: 8,
+  },
   logContainer: {},
 });

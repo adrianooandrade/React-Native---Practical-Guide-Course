@@ -3,6 +3,7 @@ import { Alert, StyleSheet, TextInput, View } from "react-native";
 import CustomButton from "../components/CustomButton";
 import { useState } from "react";
 import { Colors } from "../constants/colors";
+import Title from "../components/Title";
 
 function StartGameScreen({ onPickNumber }) {
   const [enteredNumber, setEnteredNumber] = useState("");
@@ -32,22 +33,25 @@ function StartGameScreen({ onPickNumber }) {
   }
 
   return (
-    <View style={styles.inputContainer}>
-      <TextInput
-        style={styles.numInput}
-        maxLength={2}
-        inputMode={"numeric"}
-        value={enteredNumber}
-        onChangeText={numberInputHandler}
-      ></TextInput>
-      <View style={styles.actionsContainer}>
-        <View style={styles.action}>
-          <CustomButton onPressButton={resetInputHandler}>Reset</CustomButton>
-        </View>
-        <View style={styles.action}>
-          <CustomButton onPressButton={confirmInputHandler}>
-            Confirm
-          </CustomButton>
+    <View>
+      <View style={styles.inputContainer}>
+        <Title label={"Enter a number"}></Title>
+        <TextInput
+          style={styles.numInput}
+          maxLength={2}
+          inputMode={"numeric"}
+          value={enteredNumber}
+          onChangeText={numberInputHandler}
+        ></TextInput>
+        <View style={styles.actionsContainer}>
+          <View style={styles.action}>
+            <CustomButton onPressButton={resetInputHandler}>Reset</CustomButton>
+          </View>
+          <View style={styles.action}>
+            <CustomButton onPressButton={confirmInputHandler}>
+              Confirm
+            </CustomButton>
+          </View>
         </View>
       </View>
     </View>
@@ -78,7 +82,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 2,
     color: "#000000",
     margin: 8,
-    maxWidth: 50,
+    minWidth: "100%",
     textAlign: "center",
   },
   actionsContainer: {
