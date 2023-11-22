@@ -2,7 +2,7 @@ import { Pressable, StyleSheet, Text, View } from "react-native";
 
 // Pressable is recommended as a substitute for Touchable
 // Style pressed arrow function was added for IOs as android_ripple "replacement" with opacity as instead of a ripple
-function CustomButton({ children }) {
+function CustomButton({ children, onPressButton }) {
   return (
     <View style={styles.buttonOuterContainer}>
       <Pressable
@@ -12,6 +12,7 @@ function CustomButton({ children }) {
             : styles.buttonInnerContainer
         }
         android_ripple={{ color: "#fcd941" }}
+        onPress={onPressButton}
       >
         <Text style={styles.buttonText}>{children}</Text>
       </Pressable>
