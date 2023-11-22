@@ -9,9 +9,13 @@ function StartGameScreen() {
         maxLength={2}
         inputMode={"numeric"}
       ></TextInput>
-      <View>
-        <CustomButton>Reset</CustomButton>
-        <CustomButton>Confirm</CustomButton>
+      <View style={styles.actionsContainer}>
+        <View style={styles.action}>
+          <CustomButton>Reset</CustomButton>
+        </View>
+        <View style={styles.action}>
+          <CustomButton>Confirm</CustomButton>
+        </View>
       </View>
     </View>
   );
@@ -26,7 +30,7 @@ const styles = StyleSheet.create({
     gap: 8,
     padding: 16,
     margin: 32,
-    backgroundColor: "#addee2",
+    backgroundColor: "#ffffff",
     borderRadius: 8,
     elevation: 4,
     shadowColor: "black",
@@ -34,14 +38,22 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
   },
   numInput: {
+    alignSelf: "center",
     minHeight: 50,
     fontSize: 32,
-    borderBottomColor: "#ddb52f",
+    borderBottomColor: "#fffc4b",
     borderBottomWidth: 2,
-    color: "#ddb52f",
+    color: "#000000",
     margin: 8,
     maxWidth: 50,
-    fontWeight: "bold",
     textAlign: "center",
+  },
+  actionsContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    gap: 8,
+  },
+  action: {
+    flex: 1,
   },
 });
