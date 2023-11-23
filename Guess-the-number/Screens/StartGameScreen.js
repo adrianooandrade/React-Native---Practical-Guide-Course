@@ -1,4 +1,4 @@
-import { Alert, StyleSheet, TextInput, View } from "react-native";
+import { Alert, StyleSheet, Text, TextInput, View } from "react-native";
 
 import CustomButton from "../components/CustomButton";
 import { useState } from "react";
@@ -35,7 +35,16 @@ function StartGameScreen({ onPickNumber }) {
   return (
     <View>
       <View style={styles.inputContainer}>
-        <Title label={"Enter a number"}></Title>
+        <View style={{ margin: 18, gap: 6, alignItems: "center" }}>
+          <Title label={"Enter a number"}></Title>
+          <Text style={{ alignItems: "center" }}>
+            {"The more guesses, the more sips"}
+          </Text>
+          <Text style={{ alignItems: "center", fontSize: 12 }}>
+            {"(And dont try to cheat, I will know 🧐)"}
+          </Text>
+        </View>
+
         <TextInput
           style={styles.numInput}
           maxLength={2}

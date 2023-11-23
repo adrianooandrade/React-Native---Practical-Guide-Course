@@ -1,22 +1,31 @@
 import { StatusBar } from "expo-status-bar";
 import { ImageBackground, SafeAreaView, StyleSheet, View } from "react-native";
 import { useState } from "react";
+import { Ionicons } from "@expo/vector-icons";
 import StartGameScreen from "./Screens/StartGameScreen";
 import GameScreen from "./Screens/GameScreen";
 import GameOverScreen from "./Screens/GameOverScreen";
 import Title from "./components/Title";
+import { Colors } from "./constants/colors";
 
 export default function App() {
   const [userNumber, setUserNumber] = useState(null);
-
   const [gameIsOver, setGameIsOver] = useState(false);
+  const [guessRounds, setGuessRounds] = useState(0);
 
   function pickedNumberHandler(pickedNumber) {
     setUserNumber(pickedNumber);
   }
 
-  function guessedNumberHandler() {
+  function guessedNumberHandler(guessedNumber) {
+    setGuessRounds(guessedNumber);
     setGameIsOver(true);
+  }
+
+  function startNewGameHandler() {
+    setGameIsOver(false);
+    setUserNumber(null);
+    setGuessRounds(0);
   }
 
   let screen = (
@@ -33,7 +42,13 @@ export default function App() {
   }
 
   if (gameIsOver && userNumber) {
-    screen = <GameOverScreen></GameOverScreen>;
+    screen = (
+      <GameOverScreen
+        userNumber={userNumber}
+        roundsNumber={guessRounds}
+        onStartNewGame={startNewGameHandler}
+      ></GameOverScreen>
+    );
   }
 
   return (
@@ -47,14 +62,13 @@ export default function App() {
           imageStyle={styles.backgroundImage}
         >
           <SafeAreaView style={{ flex: 1, justifyContent: "space-between" }}>
-            <View
-              style={{
-                backgroundColor: "rgba(255,255,255,0.8)",
-                margin: 28,
-                borderRadius: 8,
-                marginTop: 50,
-              }}
-            >
+            <View style={styles.appScreensContainer}>
+              <Ionicons
+                name={"beer"}
+                size={34}
+                color={Colors.primary600}
+                style={{}}
+              ></Ionicons>
               <Title label={"Guess the number"}></Title>
             </View>
 
@@ -85,5 +99,19 @@ const styles = StyleSheet.create({
   },
   backgroundImage: {
     opacity: 0.16,
+  },
+  appScreensContainer: {
+    backgroundColor: "#ffffff",
+    margin: 28,
+    borderRadius: 8,
+    marginTop: 50,
+    elevation: 4,
+    shadowColor: "black",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    alignItems: "center",
+    flexDirection: "row",
+    padding: 18,
+    gap: 4,
   },
 });
