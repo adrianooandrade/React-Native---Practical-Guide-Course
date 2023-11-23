@@ -1,5 +1,11 @@
 import { StatusBar } from "expo-status-bar";
-import { ImageBackground, SafeAreaView, StyleSheet, View } from "react-native";
+import {
+  Dimensions,
+  ImageBackground,
+  SafeAreaView,
+  StyleSheet,
+  View,
+} from "react-native";
 import { useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import StartGameScreen from "./Screens/StartGameScreen";
@@ -80,6 +86,8 @@ export default function App() {
   );
 }
 
+const deviceWidth = Dimensions.get("window").width;
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -102,7 +110,7 @@ const styles = StyleSheet.create({
   },
   appScreensContainer: {
     backgroundColor: "#ffffff",
-    margin: 28,
+    margin: deviceWidth < 300 ? 28 : 16,
     borderRadius: 8,
     marginTop: 50,
     elevation: 4,
@@ -112,6 +120,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flexDirection: "row",
     padding: 18,
+    justifyContent: "center",
     gap: 4,
   },
 });

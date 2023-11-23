@@ -1,4 +1,11 @@
-import { Alert, StyleSheet, Text, TextInput, View } from "react-native";
+import {
+  Alert,
+  StyleSheet,
+  Text,
+  TextInput,
+  useWindowDimensions,
+  View,
+} from "react-native";
 
 import CustomButton from "../components/CustomButton";
 import { useState } from "react";
@@ -7,6 +14,7 @@ import Title from "../components/Title";
 
 function StartGameScreen({ onPickNumber }) {
   const [enteredNumber, setEnteredNumber] = useState("");
+  const { width, height } = useWindowDimensions();
 
   function numberInputHandler(enteredText) {
     setEnteredNumber(enteredText);
@@ -32,21 +40,37 @@ function StartGameScreen({ onPickNumber }) {
     }
   }
 
+  const screenHeight = height;
+
   return (
     <View>
-      <View style={styles.inputContainer}>
-        <View style={{ margin: 18, gap: 6, alignItems: "center" }}>
+      <View
+        style={[
+          styles.inputContainer,
+          { paddingTop: screenHeight < 400 ? 0 : 18 },
+        ]}
+      >
+        <View
+          style={[
+            { margin: 18, gap: 6, alignItems: "center" },
+            { margin: screenHeight < 400 ? 0 : 18 },
+          ]}
+        >
           <Title label={"Enter a number"}></Title>
-          <Text style={{ alignItems: "center" }}>
-            {"The more guesses, the more sips"}
-          </Text>
-          <Text style={{ alignItems: "center", fontSize: 12 }}>
-            {"(And dont try to cheat, I will know 🧐)"}
-          </Text>
+          <View style={[{ flex: screenHeight < 400 ? 1 : 0 }]}>
+            <Text style={{ textAlign: "center" }}>
+              {
+                "The more guesses it takes to find, the more sips you will have to take"
+              }
+            </Text>
+            <Text style={{ textAlign: "center", fontSize: 12 }}>
+              {"(And dont try to cheat, I will know 🧐)"}
+            </Text>
+          </View>
         </View>
 
         <TextInput
-          style={styles.numInput}
+          style={[styles.numInput, { minHeight: screenHeight < 400 ? 10 : 32 }]}
           maxLength={2}
           inputMode={"numeric"}
           value={enteredNumber}

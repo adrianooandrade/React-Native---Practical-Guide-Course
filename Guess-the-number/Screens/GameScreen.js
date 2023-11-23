@@ -1,4 +1,11 @@
-import { Alert, FlatList, StyleSheet, Text, View } from "react-native";
+import {
+  Alert,
+  FlatList,
+  StyleSheet,
+  Text,
+  useWindowDimensions,
+  View,
+} from "react-native";
 import Title from "../components/Title";
 import { useEffect, useState } from "react";
 import { Colors } from "../constants/colors";
@@ -13,6 +20,7 @@ function GameScreen({ userNumber, onGuessedNumber }) {
   );
   const [guessRounds, setGuessRounds] = useState(0);
   const [guessRoundsLog, setGuessRoundsLog] = useState([]);
+  const { width, height } = useWindowDimensions();
 
   useEffect(() => {
     setGuessRoundsLog((previousLog) => [currentGuess, ...previousLog]);
@@ -43,9 +51,11 @@ function GameScreen({ userNumber, onGuessedNumber }) {
       (direction === "higher" && currentGuess > userNumber)
     ) {
       setGuessRounds(guessRounds + 1);
-      Alert.alert("Why are you lying?", "This counts as an extra round 🤓☝️", [
-        { text: "Ok nerd", style: "cancel" },
-      ]);
+      Alert.alert(
+        "You have to remember the number you choose",
+        "This counts as an extra round 🤓☝️",
+        [{ text: "Ok nerd", style: "cancel" }],
+      );
       return;
     }
 
@@ -60,8 +70,10 @@ function GameScreen({ userNumber, onGuessedNumber }) {
     setCurrentGuess(newNum);
   }
 
+  const screenHeight = height;
+
   const renderItem = ({ item, index }) => (
-    <View style={styles.logItem}>
+    <View style={[styles.logItem, { gap: screenHeight < 400 ? 12 : 0 }]}>
       <Text style={{ fontWeight: "bold" }}>
         {"Round: " + (guessRoundsLog.length - 1 - index)}
       </Text>
@@ -70,12 +82,34 @@ function GameScreen({ userNumber, onGuessedNumber }) {
   );
 
   return (
-    <View style={styles.gameScreen}>
-      <View style={{ margin: 18 }}>
+    <View
+      style={[
+        styles.gameScreen,
+        {
+          margin: screenHeight < 400 ? 16 : 32,
+          flexDirection: screenHeight < 400 ? "row" : "column",
+          justifyContent: screenHeight < 400 ? "space-between" : "default",
+          alignItems: screenHeight < 400 ? "center" : "stretch",
+          gap: screenHeight < 400 ? 24 : 0,
+        },
+      ]}
+    >
+      <View style={{ margin: screenHeight < 400 ? 0 : 18 }}>
         <Title label={"Computed Guess"}></Title>
       </View>
 
-      <Text style={styles.textGuess}>{currentGuess.toString()}</Text>
+      <Text
+        style={[
+          styles.textGuess,
+          {
+            padding: screenHeight < 400 ? 4 : 32,
+            fontSize: screenHeight < 400 ? 22 : 32,
+            flex: screenHeight < 400 ? 1 : 0,
+          },
+        ]}
+      >
+        {currentGuess.toString()}
+      </Text>
       <View style={styles.actionContainer}>
         <Text style={styles.text}>{"Height or Lower?"}</Text>
         <View style={{ gap: 20, flexDirection: "row" }}>
@@ -98,7 +132,9 @@ function GameScreen({ userNumber, onGuessedNumber }) {
             data={guessRoundsLog}
             renderItem={renderItem}
             keyExtractor={(item, index) => index.toString()}
-            style={{ maxHeight: 200 }}
+            style={{
+              maxHeight: screenHeight < 400 ? 100 : 200,
+            }}
           ></FlatList>
         </View>
       </View>
@@ -146,5 +182,7 @@ const styles = StyleSheet.create({
     margin: 2,
     paddingHorizontal: 8,
     paddingVertical: 4,
+    borderColor: Colors.primary600,
+    borderWidth: 2,
   },
 });
