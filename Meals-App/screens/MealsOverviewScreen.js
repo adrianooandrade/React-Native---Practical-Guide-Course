@@ -1,9 +1,34 @@
-import { Platform, StyleSheet, Text, View } from "react-native";
+import { FlatList, StyleSheet, View } from "react-native";
 
-function MealsOverviewScreen() {
+import { MEALS } from "../data/dummy-data";
+import MealItem from "../components/MealItem";
+
+function MealsOverviewScreen({ route }) {
+  const catId = route.params.categoryId;
+
+  const displayedMeals = MEALS.filter((mealItem) => {
+    return mealItem.categoryIds.includes(catId);
+  });
+
+  function renderMealItem(itemData) {
+    return (
+      <MealItem
+        title={itemData.item.title}
+        imageURL={itemData.item.imageUrl}
+        affordability={itemData.item.affordability}
+        complexity={itemData.item.complexity}
+        duration={itemData.item.duration}
+      ></MealItem>
+    );
+  }
+
   return (
-    <View>
-      <Text> Meals Overview Screen</Text>
+    <View style={styles.gridItem}>
+      <FlatList
+        data={displayedMeals}
+        keyExtractor={(item) => item.id}
+        renderItem={renderMealItem}
+      ></FlatList>
     </View>
   );
 }
@@ -16,11 +41,5 @@ const styles = StyleSheet.create({
     margin: 16,
     minHeight: 120,
     borderRadius: 8,
-    elevation: 4,
-    shadowColor: "black",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
-    backgroundColor: "white",
-    overflow: Platform.OS === "android" ? "hidden" : "visible",
   },
 });
